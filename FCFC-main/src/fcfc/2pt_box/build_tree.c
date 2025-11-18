@@ -58,8 +58,8 @@ void *tree_create(const CONF *conf, CF *cf, const int idx
       return NULL;
     }
 
-    printf("Construct the tree for catalog '%c' ...", cf->label[idx]);
-    if (conf->verbose)  printf("\n");
+    if (conf->verbose) printf("Construct the tree for catalog '%c' ...", cf->label[idx]);
+    if (conf->verbose) printf("\n");
     fflush(stdout);
 
 //    /* Read catalogue from file. */
@@ -209,7 +209,7 @@ void *tree_create(const CONF *conf, CF *cf, const int idx
 
   if (para->rank == para->root) {
 #endif
-    printf(FMT_DONE);
+    if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
     fflush(stdout);
   }

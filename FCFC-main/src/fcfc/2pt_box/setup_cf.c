@@ -387,7 +387,7 @@ static void create_tab_sbin( CONF *conf, CF *cf) {
   if ((cf->sbin[cf->ns] - cf->sbin[cf->ns-1]) == (cf->sbin[1] - cf->sbin[0])) { // Linear s bins}
     conf->smin = cf->sbin[0];
     conf->ds = cf->sbin[cf->ns] - cf->sbin[cf->ns-1];
-    printf("\nCreating a lookup table for linear bins\n");
+    if (conf->verbose) printf("\nCreating a lookup table for linear bins\n");
     const real fac = least_fac2(conf->smin, conf->ds);
     if (fac != 0) {
       /* Compute the length of the lookup table. */
@@ -412,7 +412,7 @@ static void create_tab_sbin( CONF *conf, CF *cf) {
       }
     }
   }
-  printf("\nCreating a hybrid lookup table for nonlinear bins\n");
+  if (conf->verbose) printf("\nCreating a hybrid lookup table for nonlinear bins\n");
   /* Hybrid lookup: nonlinear bin, or the table is too long for integer bins. */
   real smax = cf->sbin[cf->ns];
   smax *= smax;         /* the maximum squared distance */
@@ -444,7 +444,7 @@ static void create_tab_sp_pi( CONF *conf, CF *cf) {
   //if (!conf->fsbin && !conf->fpbin) {   /* linear s_perp and pi bins */
   if (((cf->sbin[cf->ns] - cf->sbin[cf->ns-1]) == (cf->sbin[1] - cf->sbin[0])) && \
       ((cf->pbin[cf->np] - cf->pbin[cf->np-1]) == (cf->pbin[1] - cf->pbin[0]))) { // Linear s and p bins}
-    printf("\nCreating a lookup table for linear bins\n");
+    if (conf->verbose) printf("\nCreating a lookup table for linear bins\n");
     conf->smin = cf->sbin[0];
     conf->ds = cf->sbin[cf->ns] - cf->sbin[cf->ns-1];
     conf->pmin = cf->pbin[0];
@@ -480,7 +480,7 @@ static void create_tab_sp_pi( CONF *conf, CF *cf) {
       }
     }
   }
-  printf("\nCreating a hybrid lookup table for nonlinear bins\n");
+  if (conf->verbose) printf("\nCreating a hybrid lookup table for nonlinear bins\n");
   /* Hybrid lookup: nonlinear bin, or the table is too long for integer bins. */
   real smax = cf->sbin[cf->ns];
   smax *= smax;                         /* the maximum squared s_perp */
@@ -560,7 +560,7 @@ CF *cf_setup(const CONF *conf, DATA* data, real* sbins, int ns, real* pbins, int
     , const PARA *para
 #endif
     ) {
-  printf("Initializing the correlation function calculator ...");
+  if (conf->verbose) printf("Initializing the correlation function calculator ...");
   if (conf->verbose) printf("\n");
   fflush(stdout);
 
@@ -839,7 +839,7 @@ CF *cf_setup(const CONF *conf, DATA* data, real* sbins, int ns, real* pbins, int
   }
 
 #ifndef MPI
-  printf(FMT_DONE);
+  if (conf->verbose) printf(FMT_DONE);
 #endif
   return cf;
 }
@@ -979,7 +979,7 @@ void cf_setup_worker(CF **cf, const PARA *para) {
   if (para->rank == para->root) {
     if (c->verbose)
       printf("  Correlation function settings initialized for MPI workers\n");
-    printf(FMT_DONE);
+    if (c->verbose) printf(FMT_DONE);
     fflush(stdout);
   }
 }

@@ -1100,15 +1100,16 @@ CONF *load_conf(const int argc, char *const *argv
     return NULL;
   }
 
-  printf("Loading configurations ...");
-  fflush(stdout);
-
+  
   if (conf_verify(cfg, conf)) {
     if (cfg_is_set(cfg, &conf->fconf)) free(conf->fconf);
     conf_destroy(conf);
     cfg_destroy(cfg);
     return NULL;
   }
+
+  if (conf->verbose) printf("Loading configurations ...");
+  fflush(stdout);
 
   if (conf->verbose)
     conf_print(conf
@@ -1120,7 +1121,7 @@ CONF *load_conf(const int argc, char *const *argv
   if (cfg_is_set(cfg, &conf->fconf)) free(conf->fconf);
   cfg_destroy(cfg);
 
-  printf(FMT_DONE);
+  if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
   fflush(stdout);
 #endif

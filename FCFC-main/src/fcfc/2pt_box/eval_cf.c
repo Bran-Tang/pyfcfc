@@ -66,7 +66,7 @@ static int eval_pairs(const CONF *conf, CF *cf
 #ifdef MPI
       if (para->rank == para->root) {
 #endif
-        printf("Reading %s pairs ...", conf->pc[i]);
+        if (conf->verbose) printf("Reading %s pairs ...", conf->pc[i]);
         if (conf->verbose) printf("\n  Filename: %s\n", conf->pcout[i]);
         fflush(stdout);
 
@@ -76,7 +76,7 @@ static int eval_pairs(const CONF *conf, CF *cf
           FCFC_QUIT(e);
         }
 
-        printf(FMT_DONE);
+        if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
         fflush(stdout);
       }
@@ -107,7 +107,7 @@ static int eval_pairs(const CONF *conf, CF *cf
 #ifdef MPI
     if (para->rank == para->root) {
 #endif
-      printf("Counting %c%c pairs ...", cf->label[cat[0]], cf->label[cat[1]]);
+      if (conf->verbose) printf("Counting %c%c pairs ...", cf->label[cat[0]], cf->label[cat[1]]);
       if (conf->verbose) printf("\n");
       fflush(stdout);
 #ifdef MPI
@@ -212,7 +212,7 @@ static int eval_pairs(const CONF *conf, CF *cf
 #ifdef MPI
     if (para->rank == para->root) {
 #endif
-      printf(FMT_DONE);
+      if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
       fflush(stdout);
     }
@@ -264,7 +264,7 @@ Return:
   Zero on success; non-zero on error.
 ******************************************************************************/
 static int eval_cf_exp(const CONF *conf, CF *cf) {
-  printf("Evaluate correlation function estimators ...");
+  if (conf->verbose) printf("Evaluate correlation function estimators ...");
   if (conf->verbose) printf("\n");
   fflush(stdout);
 
@@ -317,7 +317,7 @@ static int eval_cf_exp(const CONF *conf, CF *cf) {
   }
 
   free(pc);
-  printf(FMT_DONE);
+  if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
   fflush(stdout);
 #endif
@@ -334,7 +334,7 @@ Return:
   Zero on success; non-zero on error.
 ******************************************************************************/
 static int eval_cf_mp(const CONF *conf, CF *cf) {
-  printf("Compute correlation function multipoles ...");
+  if (conf->verbose) printf("Compute correlation function multipoles ...");
   if (conf->verbose) printf("\n");
   fflush(stdout);
 
@@ -358,7 +358,7 @@ static int eval_cf_mp(const CONF *conf, CF *cf) {
     }
   }
 
-  printf(FMT_DONE);
+  if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
   fflush(stdout);
 #endif
@@ -375,7 +375,7 @@ Return:
   Zero on success; non-zero on error.
 ******************************************************************************/
 static int eval_cf_wp(const CONF *conf, CF *cf) {
-  printf("Compute projected correlation functions ...");
+  if (conf->verbose) printf("Compute projected correlation functions ...");
   if (conf->verbose) printf("\n");
   fflush(stdout);
 
@@ -394,7 +394,7 @@ static int eval_cf_wp(const CONF *conf, CF *cf) {
     }
   }
 
-  printf(FMT_DONE);
+  if (conf->verbose) printf(FMT_DONE);
 #ifdef MPI
   fflush(stdout);
 #endif
